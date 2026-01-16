@@ -1,0 +1,103 @@
+# nod Compliance Pack: EU AI Act (High-Risk Focus)
+# Regulation 2024/1689
+
+profiles:
+  eu_ai_act:
+    badge_label: "EU AI Act Aligned"
+    
+    # Conditional Logic: Skip strict Article 14/15/15 requirements if the system is explicitly documented as Low Risk.
+    conditions:
+      - if:
+          regex_match: "Risk Categorization.*(Low|Minimal|No Risk)"
+        then:
+          skip: 
+            - "Human Oversight Measures"
+            - "Robustness Measures"
+            - "Cybersecurity Measures"
+
+    requirements:
+      # Article 6 & Annex III
+      - id: "#+.*Risk Categorization"
+        label: "Risk Categorization"
+        article: "Article 6 / Annex III"
+        severity: "CRITICAL"
+        remediation: "Mandatory: Categorize the system according to EU AI Act Annex III (High-Risk/Prohibited)."
+
+      # Article 10: Data Governance
+      - id: "Training Data Sources"
+        label: "Training Data"
+        article: "Article 10"
+        severity: "HIGH"
+        remediation: "Article 10: Explicitly describe training, validation, and testing data sources."
+
+      - id: "Bias Mitigation Strategy"
+        label: "Bias Mitigation"
+        article: "Article 10"
+        severity: "HIGH"
+        remediation: "Article 10: Detail strategies used to detect and mitigate bias in datasets."
+
+      # Article 11: Technical Documentation
+      - id: "Technical Documentation"
+        label: "Technical Docs"
+        article: "Article 11"
+        severity: "HIGH"
+        remediation: "Article 11: Ensure technical documentation (Annex IV) is referenced or included."
+
+      # Article 12: Record Keeping
+      - id: "Logging Capabilities"
+        label: "System Logging"
+        article: "Article 12"
+        severity: "MEDIUM"
+        remediation: "Article 12: System must generate logs enabling traceability of functioning."
+
+      - id: "Record Keeping"
+        label: "Retention Policy"
+        article: "Article 12"
+        severity: "MEDIUM"
+        remediation: "Article 12: Define retention periods and storage for system logs."
+
+      # Article 14: Human Oversight
+      - id: "Human Oversight Measures"
+        label: "Human Oversight"
+        article: "Article 14"
+        severity: "HIGH"
+        remediation: "Article 14: Describe measures for human oversight (human-in-the-loop, human-on-the-loop)."
+
+      # Article 15: Accuracy, Robustness, Cybersecurity
+      - id: "Robustness Measures"
+        label: "Robustness"
+        article: "Article 15"
+        severity: "HIGH"
+        remediation: "Article 15: Specify resilience against errors, faults, and unexpected situations."
+
+      - id: "Cybersecurity Measures"
+        label: "Cybersecurity"
+        article: "Article 15"
+        severity: "HIGH"
+        remediation: "Article 15: Detail protection against adversarial attacks (poisoning, evasion)."
+
+    red_flags:
+      # Article 5: Prohibited Practices
+      - pattern: "real-time biometric identification"
+        label: "Biometric ID Ban"
+        article: "Article 5"
+        severity: "CRITICAL"
+        remediation: "Prohibited (Art 5): Remote biometric ID in public spaces is banned."
+
+      - pattern: "social scoring"
+        label: "Social Scoring Ban"
+        article: "Article 5"
+        severity: "CRITICAL"
+        remediation: "Prohibited (Art 5): AI systems cannot be used for social scoring."
+
+      - pattern: "subliminal techniques"
+        label: "Subliminal Tech Ban"
+        article: "Article 5"
+        severity: "CRITICAL"
+        remediation: "Prohibited (Art 5): Techniques deploying subliminal messaging are banned."
+
+      - pattern: "emotion recognition.*workplace"
+        label: "Emotion Recog. Ban"
+        article: "Article 5"
+        severity: "CRITICAL"
+        remediation: "Prohibited (Art 5): Emotion recognition in workplace/education is banned."
