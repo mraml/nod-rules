@@ -1,0 +1,42 @@
+# nod Compliance Pack: HIPAA Security Rule
+# Focus: Administrative, Physical, and Technical Safeguards for ePHI.
+
+profiles:
+  hipaa_security:
+    badge_label: "HIPAA Security Rule"
+    requirements:
+      # 164.308(a)(1): Security Management Process
+      - id: "## Risk Analysis"
+        article: "45 CFR 164.308(a)(1)(ii)(A)"
+        severity: "CRITICAL"
+        remediation: "Required: Accurate and thorough assessment of potential risks to ePHI."
+
+      # 164.308(a)(4): Information Access Management
+      - id: "## Access Management"
+        article: "45 CFR 164.308(a)(4)"
+        severity: "HIGH"
+        remediation: "Required: Policies for authorizing access to ePHI (Minimum Necessary Rule)."
+
+      # 164.308(a)(5): Security Awareness
+      - id: "## Security Training"
+        article: "45 CFR 164.308(a)(5)"
+        severity: "MEDIUM"
+        remediation: "Required: Security awareness and training program for all workforce members."
+
+      # 164.312(a)(1): Access Control
+      - id: "## Unique User Identification"
+        article: "45 CFR 164.312(a)(2)(i)"
+        severity: "HIGH"
+        remediation: "Required: Unique name and/or number for identifying and tracking user identity."
+
+      # 164.312(a)(2)(iv): Encryption
+      - id: "## Encryption Policy"
+        article: "45 CFR 164.312(a)(2)(iv)"
+        severity: "CRITICAL"
+        remediation: "Addressable/Required: Mechanism to encrypt and decrypt ePHI."
+
+      # 164.312(b): Audit Controls
+      - id: "## Audit Controls"
+        article: "45 CFR 164.312(b)"
+        severity: "HIGH"
+        remediation: "Required: Hardware, software, and/or procedural mechanisms to record activity in systems containing ePHI."
