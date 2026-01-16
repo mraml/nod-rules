@@ -1,0 +1,48 @@
+# nod Compliance Pack: SOC 2 (Security / Common Criteria)
+# NOTE: Checks for standard documentation artifacts that auditors typically request for SOC 2 Type II.
+
+profiles:
+  soc2_common_criteria:
+    badge_label: "SOC 2 Readiness"
+    requirements:
+      # CC1.2: Ethics & Conduct
+      - id: "## Code of Conduct"
+        control_id: "SOC2: CC1.2"
+        severity: "MEDIUM"
+        remediation: "Required Artifact: A documented code of conduct or ethics policy."
+
+      # CC5.2: Risk Assessment
+      - id: "## Risk Assessment"
+        control_id: "SOC2: CC3.2"
+        severity: "HIGH"
+        remediation: "Required Artifact: Identification and analysis of risks to the achievement of objectives."
+
+      # CC6.1: Logical Access
+      - id: "## Access Control Policy"
+        control_id: "SOC2: CC6.1"
+        severity: "CRITICAL"
+        remediation: "Required Artifact: Policies for managing logical access to system assets (AuthN/AuthZ)."
+
+      # CC6.4: Physical Access (If applicable, usually covered by cloud provider, but app level needs mention)
+      - id: "## Physical Security"
+        control_id: "SOC2: CC6.4"
+        severity: "LOW"
+        remediation: "Required Artifact: Statement on physical security (or reference to Cloud Provider inheritance)."
+
+      # CC7.1: System Operations (Monitoring)
+      - id: "## Monitoring & Logging"
+        control_id: "SOC2: CC7.2"
+        severity: "HIGH"
+        remediation: "Required Artifact: Description of vulnerability management and anomaly detection systems."
+
+      # CC8.1: Change Management
+      - id: "## Change Management"
+        control_id: "SOC2: CC8.1"
+        severity: "HIGH"
+        remediation: "Required Artifact: Policy for authorizing, designing, developing, and deploying changes (CI/CD)."
+
+      # CC9.2: Incident Response
+      - id: "## Incident Response Plan"
+        control_id: "SOC2: CC7.3"
+        severity: "HIGH"
+        remediation: "Required Artifact: Procedures for responding to security incidents."
