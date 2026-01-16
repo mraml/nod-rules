@@ -1,0 +1,42 @@
+# nod Compliance Pack: GDPR (AI Focus)
+# Focus: Data protection, transparency, and processing records.
+
+profiles:
+  gdpr_ai:
+    badge_label: "GDPR Aligned"
+    requirements:
+      # Article 30: Records of Processing Activities
+      - id: "## Record of Processing Activities"
+        article: "GDPR Art. 30"
+        severity: "HIGH"
+        remediation: "Mandatory: Maintain a record of processing activities (RoPA) under responsibility."
+
+      # Article 35: Data Protection Impact Assessment
+      - id: "## Data Protection Impact Assessment"
+        article: "GDPR Art. 35"
+        severity: "CRITICAL"
+        remediation: "Mandatory: DPIA is required for high-risk processing (common in AI/ML profiling)."
+
+      # Article 13/14: Information to be provided
+      - id: "## Privacy Notice"
+        article: "GDPR Art. 13"
+        severity: "HIGH"
+        remediation: "Mandatory: Information regarding the processing of personal data (Transparency)."
+
+      # Article 22: Automated Decision Making
+      - id: "## Automated Decision Making"
+        article: "GDPR Art. 22"
+        severity: "HIGH"
+        remediation: "Conditional: If ADM exists, explicit logic and consequences must be documented."
+
+      # Article 32: Security of Processing
+      - id: "## Data Minimization"
+        article: "GDPR Art. 5(1)(c)"
+        severity: "MEDIUM"
+        remediation: "Principle: Personal data must be adequate, relevant, and limited to what is necessary."
+
+    red_flags:
+      - pattern: "indefinite retention"
+        severity: "CRITICAL"
+        article: "GDPR Art. 5(1)(e)"
+        remediation: "Violation: Storage limitation principle requires defined retention periods."
