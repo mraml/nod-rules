@@ -1,0 +1,56 @@
+# nod Compliance Pack: Dynamic SDL Scoping
+# Focus: determining required security tests based on spec content.
+
+profiles:
+  sdl_scoping:
+    badge_label: "SDL Scope Defined"
+    
+    # Baseline: Everyone does SAST and SCA
+    requirements:
+      - id: "#+.*(SAST|Static Analysis)"
+        label: "SAST Scan"
+        severity: "HIGH"
+        remediation: "Baseline: SAST must be configured in the CI/CD pipeline."
+
+      - id: "#+.*(SCA|Dependency Scan)"
+        label: "SCA Scan"
+        severity: "HIGH"
+        remediation: "Baseline: Software Composition Analysis (SCA) is required for open source libraries."
+
+    # Dynamic Scoping via Conditions
+    conditions:
+      # 1. Web/API assets require DAST
+      - if:
+          regex_match: "(API|Web Interface|HTTP|REST|GraphQL|Frontend)"
+        then:
+          require:
+            - id: "#+.*(DAST|Dynamic Analysis)"
+              severity: "HIGH"
+              remediation: "Scope Triggered: Web/API components detected. DAST is mandatory."
+
+      # 2. High Risk/External exposure requires Pentesting
+      - if:
+          regex_match: "(Publicly Accessible|High Risk|PCI|PII|Sensitive Data)"
+        then:
+          require:
+            - id: "#+.*(Penetration Test|Red Team)"
+              severity: "CRITICAL"
+              remediation: "Scope Triggered: High risk/exposure detected. Manual Penetration Testing is mandatory."
+
+      # 3. Cloud/Infrastructure implies Architecture Review
+      - if:
+          regex_match: "(AWS|Azure|GCP|Cloud|Kubernetes|Docker|Infrastructure)"
+        then:
+          require:
+            - id: "#+.*(Architecture Review|Threat Model)"
+              severity: "HIGH"
+              remediation: "Scope Triggered: Infrastructure components detected. Formal Threat Modeling/Arch Review required."
+
+      # 4. Critical Data implies Fuzzing
+      - if:
+          regex_match: "(Parser|File Upload|Deserialization|Protocol)"
+        then:
+          require:
+            - id: "#+.*(Fuzzing|Fuzz Test)"
+              severity: "MEDIUM"
+              remediation: "Scope Triggered: Complex input parsing detected. Fuzz testing is recommended."
