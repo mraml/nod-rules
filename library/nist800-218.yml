@@ -1,0 +1,90 @@
+# nod Compliance Pack: NIST SP 800-218 (SSDF)
+# Focus: Secure Software Development Framework (v1.1)
+
+profiles:
+  nist_ssdf:
+    badge_label: "SSDF Aligned"
+    
+    requirements:
+      # --- PO: Prepare the Organization ---
+      - id: "#+.*Secure.*Dev.*Policy"
+        label: "Secure Dev Policy"
+        control_id: "SSDF PO.1"
+        severity: "HIGH"
+        remediation: "PO.1: Define and document internal secure software development policies."
+
+      - id: "#+.*(Roles|Responsibilities)"
+        label: "Security Roles"
+        control_id: "SSDF PO.2"
+        severity: "MEDIUM"
+        remediation: "PO.2: Explicitly define security roles and responsibilities for the software lifecycle."
+
+      # --- PS: Protect the Software ---
+      - id: "#+.*(Code Signing|Integrity Verification)"
+        label: "Software Integrity"
+        control_id: "SSDF PS.2"
+        severity: "CRITICAL"
+        remediation: "PS.2: Provide a mechanism to verify software integrity (e.g., Code Signing, Hashes)."
+
+      - id: "#+.*(Access Control|Least Privilege)"
+        label: "Dev Env Access"
+        control_id: "SSDF PS.3"
+        severity: "HIGH"
+        remediation: "PS.3: Protect all forms of code/data from unauthorized access (e.g., MFA, RBAC)."
+
+      # --- PW: Produce Well-Secured Software ---
+      - id: "#+.*Threat Model"
+        label: "Threat Modeling"
+        control_id: "SSDF PW.2"
+        severity: "CRITICAL"
+        remediation: "PW.2: Review software designs using threat modeling to identify security risks early."
+
+      - id: "#+.*(SBOM|Software Bill of Materials|Third-Party)"
+        label: "SBOM / Provenance"
+        control_id: "SSDF PW.4"
+        severity: "HIGH"
+        remediation: "PW.4: Reuse existing well-secured software and maintain a Software Bill of Materials (SBOM)."
+
+      - id: "#+.*(Code Review|Peer Review)"
+        label: "Code Review Process"
+        control_id: "SSDF PW.7"
+        severity: "HIGH"
+        remediation: "PW.7: Review code and configurations for security vulnerabilities (e.g., Peer Review)."
+
+      - id: "#+.*(Static Analysis|Dynamic Analysis|Penetration Test)"
+        label: "Security Testing"
+        control_id: "SSDF PW.8"
+        severity: "HIGH"
+        remediation: "PW.8: Test executable code to identify vulnerabilities (SAST/DAST/Pentesting)."
+
+      - id: "#+.*Default Config"
+        label: "Secure Defaults"
+        control_id: "SSDF PW.9"
+        severity: "MEDIUM"
+        remediation: "PW.9: Configure the software to have secure settings by default."
+
+      # --- RV: Respond to Vulnerabilities ---
+      - id: "#+.*(Vulnerability Disclosure|Bug Bounty)"
+        label: "Vuln Disclosure"
+        control_id: "SSDF RV.1"
+        severity: "HIGH"
+        remediation: "RV.1: Identify and confirm vulnerabilities on an ongoing basis (Disclosure Policy)."
+
+      - id: "#+.*Root Cause Analysis"
+        label: "Root Cause Analysis"
+        control_id: "SSDF RV.3"
+        severity: "MEDIUM"
+        remediation: "RV.3: Analyze vulnerabilities to identify their root causes."
+
+    red_flags:
+      - pattern: "hardcoded.*secret"
+        label: "Hardcoded Secrets"
+        control_id: "SSDF PW.6"
+        severity: "CRITICAL"
+        remediation: "PW.6: Configure compilation/build processes to avoid embedding secrets in executables."
+      
+      - pattern: "disable.*integrity.*check"
+        label: "Disabled Integrity"
+        control_id: "SSDF PS.2"
+        severity: "CRITICAL"
+        remediation: "PS.2: Integrity checks must never be disabled in production artifacts."
