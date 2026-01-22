@@ -1,11 +1,15 @@
 # nod Compliance Pack: Dynamic SDL Scoping
 # Focus: determining required security tests based on spec content.
+#
+# ⚠️ IMPORTANT: Do NOT use --strict mode with this rule set.
+# This profile is designed for scoping and information gathering to inform security teams/engineers.
+# Gatekeeping on empty sections here is counter-productive to the discovery process.
 
 profiles:
   sdl_scoping:
     badge_label: "SDL Scope Defined"
     
-    # Baseline: Everyone does SAST and SCA
+    # Baseline: Everyone does SAST, SCA, and must classify their architecture
     requirements:
       - id: "#+.*(SAST|Static Analysis)"
         label: "SAST Scan"
@@ -16,6 +20,12 @@ profiles:
         label: "SCA Scan"
         severity: "HIGH"
         remediation: "Baseline: Software Composition Analysis (SCA) is required for open source libraries."
+
+      # Force classification to prevent "Uncategorized" features
+      - id: "Architecture Type:.*(Web|Mobile|API|CLI|Library|Service|Job|Other)"
+        label: "Architecture Classification"
+        severity: "HIGH"
+        remediation: "You must classify the architecture type (e.g., 'Architecture Type: Web'). If 'Other', specify details."
 
     # Dynamic Scoping via Conditions
     conditions:
@@ -54,3 +64,23 @@ profiles:
             - id: "#+.*(Fuzzing|Fuzz Test)"
               severity: "MEDIUM"
               remediation: "Scope Triggered: Complex input parsing detected. Fuzz testing is recommended."
+
+      # 5. The "Novelty/Custom" Trap (Emerging Tech)
+      # If the spec admits to using custom or experimental tech, force a human review.
+      - if:
+          regex_match: "(Custom Protocol|Proprietary Encryption|Experimental|Non-standard|Bleeding Edge|Novel Architecture)"
+        then:
+          require:
+            - id: "#+.*(Security Consultation|Architecture Review)"
+              severity: "CRITICAL"
+              remediation: "Emerging/Custom tech detected. You must schedule a manual Security Architect review."
+
+      # 6. The "Ambiguity" Trap
+      # If the spec is full of TBDs, it's not ready for scoping.
+      - if:
+          regex_match: "(TBD|To Be Determined|Unknown Architecture)"
+        then:
+          require:
+            - id: "#+.*(Scope Clarification)"
+              severity: "HIGH"
+              remediation: "Scope is too ambiguous (TBDs detected). Define the technology stack before proceeding."
